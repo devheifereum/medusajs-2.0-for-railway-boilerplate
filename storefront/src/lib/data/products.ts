@@ -1,46 +1,55 @@
-import { sdk } from "@lib/config"
+import { axiosInstance, sdk } from "@lib/config"
 import { HttpTypes } from "@medusajs/types"
 import { cache } from "react"
 import { getRegion } from "./regions"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
 import { sortProducts } from "@lib/util/sort-products"
+import axios from "axios"
 
-export const getProductsById = cache(async function ({
+export const getProductsById = (async function ({
   ids,
   regionId,
 }: {
   ids: string[]
   regionId: string
 }) {
-  return sdk.store.product
-    .list(
-      {
-        id: ids,
-        region_id: regionId,
-        fields: "*variants.calculated_price,+variants.inventory_quantity",
-      },
-      { next: { tags: ["products"] } }
-    )
-    .then(({ products }) => products)
+
+  const response = await axiosInstance.get(`/store/products`, {
+    params: {
+      id: ids,
+      region_id: regionId,
+      fields: "*variants.calculated_price,+variants.inventory_quantity",
+    }
+  });
+
+  const products = response.data.products
+
+  return products
+
+
 })
 
-export const getProductByHandle = cache(async function (
+export const getProductByHandle = (async function (
   handle: string,
   regionId: string
 ) {
-  return sdk.store.product
-    .list(
-      {
-        handle,
-        region_id: regionId,
-        fields: "*variants.calculated_price,+variants.inventory_quantity",
-      },
-      { next: { tags: ["products"] } }
-    )
-    .then(({ products }) => products[0])
+
+  const response = await axiosInstance.get(`/store/products`, {
+    params: {
+      handle,
+      region_id: regionId,
+      fields: "*variants.calculated_price,+variants.inventory_quantity",
+    }
+  });
+
+  const products = response.data.products
+
+  return products[0]
+
+
 })
 
-export const getProductsList = cache(async function ({
+export const getProductsList = (async function ({
   pageParam = 1,
   queryParams,
   countryCode,
@@ -64,36 +73,53 @@ export const getProductsList = cache(async function ({
       nextPage: null,
     }
   }
-  return sdk.store.product
-    .list(
-      {
-        limit,
-        offset,
-        region_id: region.id,
-        fields: "*variants.calculated_price",
-        ...queryParams,
-      },
-      { next: { tags: ["products"] } }
-    )
-    .then(({ products, count }) => {
-      const nextPage = count > offset + limit ? pageParam + 1 : null
 
-      return {
-        response: {
-          products,
-          count,
-        },
-        nextPage: nextPage,
-        queryParams,
-      }
-    })
+  const response = await axiosInstance.get(`/store/products`, {
+    params: {
+      limit,
+      offset,
+      region_id: region.id,
+      fields: "*variants.calculated_price",
+      ...queryParams,
+    }
+  });
+
+  if (response.status !== 200) {
+    throw new Error('Failed to fetch products')
+  }
+
+
+  const {
+    products,
+    count
+  } = response.data
+
+  const nextPage = count > offset + limit ? pageParam + 1 : null
+
+  const images = []
+  for (const product of products) {
+    images.push(product.images?.[0]?.url)
+  }
+
+  console.log('Images', images)
+
+  return {
+    response: {
+      products: products,
+      count,
+    },
+    nextPage: nextPage,
+    queryParams,
+  }
+
+
 })
 
 /**
  * This will fetch 100 products to the Next.js cache and sort them based on the sortBy parameter.
  * It will then return the paginated products based on the page and limit parameters.
  */
-export const getProductsListWithSort = cache(async function ({
+export const getProductsListWithSort = (async function ({
   page = 0,
   queryParams,
   sortBy = "created_at",

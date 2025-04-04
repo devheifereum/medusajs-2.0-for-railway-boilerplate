@@ -11,7 +11,19 @@ import { HttpTypes } from "@medusajs/types"
 
 const SideMenuItems = {
   Home: "/",
-  Store: "/store",
+  Shop: "/store",
+  Affiliate: "/affiliate",
+  "About Us": "/about-us",
+}
+
+// External links that open in new tabs
+const ExternalMenuItems = {
+  "Face Analyzer": "https://analyze.nuuhabeauty.com/face-analyzer",
+  "Ingredients Checker": "https://analyze.nuuhabeauty.com/product-ingredients",
+}
+
+// Standard utility links
+const UtilityMenuItems = {
   Search: "/search",
   Account: "/account",
   Cart: "/cart",
@@ -56,20 +68,52 @@ const SideMenu = ({ regions }: { regions: HttpTypes.StoreRegion[] | null }) => {
                       </button>
                     </div>
                     <ul className="flex flex-col gap-6 items-start justify-start">
-                      {Object.entries(SideMenuItems).map(([name, href]) => {
-                        return (
-                          <li key={name}>
-                            <LocalizedClientLink
-                              href={href}
-                              className="text-3xl leading-10 hover:text-ui-fg-disabled"
-                              onClick={close}
-                              data-testid={`${name.toLowerCase()}-link`}
-                            >
-                              {name}
-                            </LocalizedClientLink>
-                          </li>
-                        )
-                      })}
+                      {/* Main navigation items */}
+                      {Object.entries(SideMenuItems).map(([name, href]) => (
+                        <li key={name}>
+                          <LocalizedClientLink
+                            href={href}
+                            className="text-3xl leading-10 hover:text-ui-fg-disabled"
+                            onClick={close}
+                            data-testid={`${name.toLowerCase().replace(/\s+/g, '-')}-link`}
+                          >
+                            {name}
+                          </LocalizedClientLink>
+                        </li>
+                      ))}
+
+                      {/* External links that open in new tabs */}
+                      {Object.entries(ExternalMenuItems).map(([name, href]) => (
+                        <li key={name}>
+                          <a
+                            href={href}
+                            className="text-3xl leading-10 hover:text-ui-fg-disabled"
+                            onClick={close}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            data-testid={`${name.toLowerCase().replace(/\s+/g, '-')}-link`}
+                          >
+                            {name}
+                          </a>
+                        </li>
+                      ))}
+
+                      {/* Divider */}
+                      <li className="w-full border-t border-white/20 my-2"></li>
+
+                      {/* Utility menu items */}
+                      {Object.entries(UtilityMenuItems).map(([name, href]) => (
+                        <li key={name}>
+                          <LocalizedClientLink
+                            href={href}
+                            className="text-2xl leading-8 hover:text-ui-fg-disabled"
+                            onClick={close}
+                            data-testid={`${name.toLowerCase()}-link`}
+                          >
+                            {name}
+                          </LocalizedClientLink>
+                        </li>
+                      ))}
                     </ul>
                     <div className="flex flex-col gap-y-6">
                       <div
@@ -91,7 +135,7 @@ const SideMenu = ({ regions }: { regions: HttpTypes.StoreRegion[] | null }) => {
                         />
                       </div>
                       <Text className="flex justify-between txt-compact-small">
-                        © {new Date().getFullYear()} Medusa Store. All rights
+                        © {new Date().getFullYear()} Nuuha Beauty. All rights
                         reserved.
                       </Text>
                     </div>
