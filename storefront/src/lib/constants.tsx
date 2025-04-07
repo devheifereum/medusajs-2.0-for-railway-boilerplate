@@ -44,6 +44,10 @@ export const isManual = (providerId?: string) => {
   return providerId?.startsWith("pp_system_default")
 }
 
+export const isSenangPay = (providerId?: string) => {
+  return providerId?.startsWith("manual_manual")
+}
+
 // Add currencies that don't need to be divided by 100
 export const noDivisionCurrencies = [
   "krw",

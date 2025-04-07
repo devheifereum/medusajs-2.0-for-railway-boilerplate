@@ -39,10 +39,10 @@ export default async function Nav() {
               </LocalizedClientLink>
               <LocalizedClientLink
                 className={linkClasses}
-                href="/affiliate"
-                data-testid="nav-affiliate-link"
+                href="/account"
+                data-testid="nav-account-link"
               >
-                Affiliate
+                Account
               </LocalizedClientLink>
               <LocalizedClientLink
                 className={linkClasses}

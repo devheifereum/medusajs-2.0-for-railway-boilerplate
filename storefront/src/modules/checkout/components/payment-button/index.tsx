@@ -9,7 +9,7 @@ import ErrorMessage from "../error-message"
 import Spinner from "@modules/common/icons/spinner"
 import { placeOrder } from "@lib/data/cart"
 import { HttpTypes } from "@medusajs/types"
-import { isManual, isPaypal, isStripe } from "@lib/constants"
+import { isManual, isPaypal, isSenangPay, isStripe } from "@lib/constants"
 
 type PaymentButtonProps = {
   cart: HttpTypes.StoreCart
@@ -58,6 +58,10 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
           data-testid={dataTestId}
         />
       )
+    // case isSenangPay(paymentSession?.provider_id):
+    //   return (
+    //     <SenangPayPaymentButton notReady={notReady} />
+    //   )
     default:
       return <Button disabled>Select a payment method</Button>
   }
@@ -296,6 +300,10 @@ const ManualTestPaymentButton = ({ notReady }: { notReady: boolean }) => {
       />
     </>
   )
+}
+
+const SenangPayPaymentButton = ({ notReady }: { notReady: boolean }) => {
+  return <Button>SenangPay</Button>
 }
 
 export default PaymentButton
