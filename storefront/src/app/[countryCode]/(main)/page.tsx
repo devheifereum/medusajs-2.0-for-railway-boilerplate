@@ -40,9 +40,10 @@ export default async function Home({
           controls
           className="w-1/2 aspect-video object-cover">
           <source src="/lisa-nuuha.mp4" />
-          Your browser does not support the video tag.
+          Your browser does not support the video tagg.
         </video>
       </div>
+
 
       <HeroAds />
 
