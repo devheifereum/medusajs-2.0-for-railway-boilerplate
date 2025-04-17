@@ -40,6 +40,19 @@ const Payment = ({
     activeSession?.provider_id ?? ""
   )
 
+
+  useEffect(() => {
+    console.log({
+      'isStripe': isStripe,
+      'activeSession': activeSession,
+      'cardBrand': cardBrand,
+      'cardComplete': cardComplete,
+      'selectedPaymentMethod': selectedPaymentMethod,
+      'paidByGiftcard': paidByGiftcard,
+      'cart': cart
+    })
+  }, [cart])
+
   const searchParams = useSearchParams()
   const router = useRouter()
   const pathname = usePathname()
@@ -118,6 +131,8 @@ const Payment = ({
   useEffect(() => {
     setError(null)
   }, [isOpen])
+
+
 
   return (
     <div className="bg-white">
