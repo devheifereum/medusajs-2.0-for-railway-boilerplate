@@ -8,14 +8,14 @@ import { redirect } from "next/navigation"
 import { cache } from "react"
 import { getAuthHeaders, removeAuthToken, setAuthToken } from "./cookies"
 
-export const getCustomer = cache(async function () {
+export const getCustomer = async function () {
   return await sdk.store.customer
     .retrieve({}, { next: { tags: ["customer"] }, ...getAuthHeaders() })
     .then(({ customer }) => customer)
     .catch(() => null)
-})
+}
 
-export const updateCustomer = cache(async function (
+export const updateCustomer = async function (
   body: HttpTypes.StoreUpdateCustomer
 ) {
   const updateRes = await sdk.store.customer
@@ -25,7 +25,7 @@ export const updateCustomer = cache(async function (
 
   revalidateTag("customer")
   return updateRes
-})
+}
 
 export async function signup(_currentState: unknown, formData: FormData) {
   const password = formData.get("password") as string
@@ -43,7 +43,7 @@ export async function signup(_currentState: unknown, formData: FormData) {
     })
 
     const customHeaders = { authorization: `Bearer ${token}` }
-    
+
     const { customer: createdCustomer } = await sdk.store.customer.create(
       customerForm,
       {},

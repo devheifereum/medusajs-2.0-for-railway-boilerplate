@@ -32,7 +32,7 @@ export const getCartId = () => {
 
 export const setCartId = (cartId: string) => {
   cookies().set("_medusa_cart_id", cartId, {
-    maxAge: 60 * 60 * 24 * 7,
+    maxAge: 10,
     httpOnly: true,
     sameSite: "strict",
     secure: process.env.NODE_ENV === "production",
