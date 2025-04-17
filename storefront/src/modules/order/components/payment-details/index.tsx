@@ -12,6 +12,8 @@ type PaymentDetailsProps = {
 const PaymentDetails = ({ order }: PaymentDetailsProps) => {
   const payment = order.payment_collections?.[0].payments?.[0]
 
+  console.log('Payment', payment)
+
   return (
     <div>
       <Heading level="h2" className="flex flex-row text-3xl-regular my-6">

@@ -15,6 +15,8 @@ import { isStripe as isStripeFunc, paymentInfoMap } from "@lib/constants"
 import { StripeContext } from "@modules/checkout/components/payment-wrapper"
 import { initiatePaymentSession } from "@lib/data/cart"
 
+//test
+
 const Payment = ({
   cart,
   availablePaymentMethods,
@@ -26,6 +28,10 @@ const Payment = ({
     (paymentSession: any) => paymentSession.status === "pending"
   )
 
+
+  console.log('Active Session', activeSession)
+  console.log('Available Payment Methods', availablePaymentMethods)
+  console.log('Cart', cart)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [cardBrand, setCardBrand] = useState<string | null>(null)
@@ -175,7 +181,7 @@ const Payment = ({
                     onChange={(e) => {
                       setCardBrand(
                         e.brand &&
-                          e.brand.charAt(0).toUpperCase() + e.brand.slice(1)
+                        e.brand.charAt(0).toUpperCase() + e.brand.slice(1)
                       )
                       setError(e.error?.message || null)
                       setCardComplete(e.complete)
