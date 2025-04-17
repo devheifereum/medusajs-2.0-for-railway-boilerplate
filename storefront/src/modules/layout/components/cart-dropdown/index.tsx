@@ -70,18 +70,14 @@ const CartDropdown = ({
   }, [totalItems, itemRef.current])
 
   return (
-    <div
-      className="h-full z-50"
+    <div 
+      className="absolute top-0 right-0 h-full"
       onMouseEnter={openAndCancel}
       onMouseLeave={close}
     >
-      <Popover className="relative h-full">
-        <Popover.Button className="h-full">
-          <LocalizedClientLink
-            className="hover:text-ui-fg-base"
-            href="/cart"
-            data-testid="nav-cart-link"
-          >{`Cart (${totalItems})`}</LocalizedClientLink>
+      <Popover className="h-full">
+        <Popover.Button className="h-full w-6">
+          <span className="sr-only">Open cart</span>
         </Popover.Button>
         <Transition
           show={cartDropdownOpen}
@@ -114,14 +110,13 @@ const CartDropdown = ({
                       <div
                         className="grid grid-cols-[122px_1fr] gap-x-4"
                         key={item.id}
-                        data-testid="cart-item"
                       >
                         <LocalizedClientLink
                           href={`/products/${item.variant?.product?.handle}`}
                           className="w-24"
                         >
                           <Thumbnail
-                            thumbnail={item.variant?.product?.thumbnail}
+                            thumbnail={item.thumbnail}
                             images={item.variant?.product?.images}
                             size="square"
                           />
@@ -129,39 +124,24 @@ const CartDropdown = ({
                         <div className="flex flex-col justify-between flex-1">
                           <div className="flex flex-col flex-1">
                             <div className="flex items-start justify-between">
-                              <div className="flex flex-col overflow-ellipsis whitespace-nowrap mr-4 w-[180px]">
+                              <div>
                                 <h3 className="text-base-regular overflow-hidden text-ellipsis">
                                   <LocalizedClientLink
                                     href={`/products/${item.variant?.product?.handle}`}
-                                    data-testid="product-link"
+                                    className="w-24"
                                   >
                                     {item.title}
                                   </LocalizedClientLink>
                                 </h3>
-                                <LineItemOptions
-                                  variant={item.variant}
-                                  data-testid="cart-item-variant"
-                                  data-value={item.variant}
-                                />
-                                <span
-                                  data-testid="cart-item-quantity"
-                                  data-value={item.quantity}
-                                >
-                                  Quantity: {item.quantity}
-                                </span>
+                                <LineItemOptions variant={item.variant} />
+                                <span>Quantity: {item.quantity}</span>
                               </div>
                               <div className="flex justify-end">
                                 <LineItemPrice item={item} style="tight" />
                               </div>
                             </div>
                           </div>
-                          <DeleteButton
-                            id={item.id}
-                            className="mt-1"
-                            data-testid="cart-item-remove-button"
-                          >
-                            Remove
-                          </DeleteButton>
+                          <DeleteButton id={item.id}>Remove</DeleteButton>
                         </div>
                       </div>
                     ))}
@@ -172,11 +152,7 @@ const CartDropdown = ({
                       Subtotal{" "}
                       <span className="font-normal">(excl. taxes)</span>
                     </span>
-                    <span
-                      className="text-large-semi"
-                      data-testid="cart-subtotal"
-                      data-value={subtotal}
-                    >
+                    <span className="text-large-semi">
                       {convertToLocale({
                         amount: subtotal,
                         currency_code: cartState.currency_code,
@@ -184,11 +160,7 @@ const CartDropdown = ({
                     </span>
                   </div>
                   <LocalizedClientLink href="/cart" passHref>
-                    <Button
-                      className="w-full"
-                      size="large"
-                      data-testid="go-to-cart-button"
-                    >
+                    <Button className="w-full" size="large">
                       Go to cart
                     </Button>
                   </LocalizedClientLink>

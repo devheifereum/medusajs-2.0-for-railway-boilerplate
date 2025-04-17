@@ -9,15 +9,13 @@ const Hero = () => {
 
   // Image paths for desktop and mobile
   const desktopImages = [
-    "/images/Raya Sale-Header Website.png",
-    "/images/Raya Sale-Header Website.png",
-    "/images/Raya Sale-Header Website.png",
+    "/images/homepage1.jpg",
+    "/images/homepage2.jpg",
   ]
 
   const mobileImages = [
-    "/images/Raya Sale-Header Website Mobile.png",
-    "/images/Raya Sale-Header Website Mobile.png",
-    "/images/Raya Sale-Header Website Mobile.png",
+    "/images/homepage1.jpg",
+    "/images/homepage2.jpg",
   ]
 
   // Check if the viewport is mobile size
@@ -57,7 +55,7 @@ const Hero = () => {
 
   return (
     <div className="w-full border-b border-ui-border-base relative bg-ui-bg-subtle overflow-hidden"
-      style={{ height: isMobile ? "60vh" : "75vh" }}>
+      style={{ height: isMobile ? "80vh" : "100vh" }}>
       {/* Carousel slides */}
       <div
         className="absolute inset-0 w-full h-full transition-transform duration-700 ease-in-out"

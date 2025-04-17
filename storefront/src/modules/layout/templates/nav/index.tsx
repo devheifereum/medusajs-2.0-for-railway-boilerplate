@@ -14,8 +14,8 @@ export default async function Nav() {
   const linkClasses = "hover:text-ui-fg-base relative after:absolute after:w-0 after:h-0.5 after:bg-[#967b4f] after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300"
 
   return (
-    <div className="sticky top-0 inset-x-0 z-50 group">
-      <header className="relative h-16 mx-auto duration-200 bg-transparent">
+    <div className="fixed top-0 inset-x-0 z-50">
+      <header className="relative h-16 mx-auto">
         <nav className="content-container txt-xsmall-plus text-ui-fg-base flex items-center justify-between w-full h-full text-small-regular">
           {/* Left section with navigation links */}
           <div className="flex-1 basis-0 h-full flex items-center gap-x-6">
@@ -39,10 +39,10 @@ export default async function Nav() {
               </LocalizedClientLink>
               <LocalizedClientLink
                 className={linkClasses}
-                href="/account"
-                data-testid="nav-account-link"
+                href="/affiliate"
+                data-testid="nav-affiliate-link"
               >
-                Account
+                Affiliate
               </LocalizedClientLink>
               <LocalizedClientLink
                 className={linkClasses}
@@ -92,35 +92,33 @@ export default async function Nav() {
             </LocalizedClientLink>
           </div>
 
-          {/* Right section with search, account, cart */}
+          {/* Right section with search, cart, menu */}
           <div className="flex items-center gap-x-6 h-full flex-1 basis-0 justify-end">
             <div className="flex items-center gap-x-6 h-full">
-              {process.env.NEXT_PUBLIC_FEATURE_SEARCH_ENABLED && (
-                <LocalizedClientLink
-                  className="hover:text-ui-fg-base"
-                  href="/search"
-                  scroll={false}
-                  data-testid="nav-search-link"
-                  aria-label="Search"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search">
-                    <circle cx="11" cy="11" r="8"/>
-                    <path d="m21 21-4.3-4.3"/>
-                  </svg>
-                </LocalizedClientLink>
-              )}
+              <LocalizedClientLink
+                className="hover:text-ui-fg-base"
+                href="/search"
+                scroll={false}
+                data-testid="nav-search-link"
+                aria-label="Search"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search">
+                  <circle cx="11" cy="11" r="8"/>
+                  <path d="m21 21-4.3-4.3"/>
+                </svg>
+              </LocalizedClientLink>
               <Suspense
                 fallback={
                   <LocalizedClientLink
-                    className="hover:text-ui-fg-base flex gap-2"
+                    className="hover:text-ui-fg-base flex gap-2 relative"
                     href="/cart"
                     data-testid="nav-cart-link"
                     aria-label="Cart"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-shopping-bag">
-                      <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
-                      <path d="M3 6h18"/>
-                      <path d="M16 10a4 4 0 0 1-8 0"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-shopping-cart">
+                      <circle cx="8" cy="21" r="1"/>
+                      <circle cx="19" cy="21" r="1"/>
+                      <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
                     </svg>
                   </LocalizedClientLink>
                 }
