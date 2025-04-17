@@ -41,4 +41,6 @@ class IstoreFulfillmentService extends AbstractFulfillmentProviderService {
     }
 }
 
+//test
 export default IstoreFulfillmentService;
+
