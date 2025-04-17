@@ -30,6 +30,7 @@ export const getCartId = () => {
   return cookies().get("_medusa_cart_id")?.value
 }
 
+
 export const setCartId = (cartId: string) => {
   cookies().set("_medusa_cart_id", cartId, {
     maxAge: 10,
@@ -42,3 +43,6 @@ export const setCartId = (cartId: string) => {
 export const removeCartId = () => {
   cookies().set("_medusa_cart_id", "", { maxAge: -1 })
 }
+
+
+//set cookie to expire in 10 seconds
